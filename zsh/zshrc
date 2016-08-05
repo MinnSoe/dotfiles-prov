@@ -1,0 +1,18 @@
+DOTFILES_BASE=$HOME/.dotfiles
+source $DOTFILES_BASE/zsh/antigen/antigen.zsh
+
+antigen use oh-my-zsh
+
+if [[ $OSTYPE == darwin* ]]; then
+  antigen bundle osx
+fi
+
+## Batch load bundles
+antigen bundles <<EOBUNDLES
+  git
+  zsh-users/zsh-syntax-highlighting
+EOBUNDLES
+
+antigen apply
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

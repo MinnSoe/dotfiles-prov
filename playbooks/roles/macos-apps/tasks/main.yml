@@ -1,0 +1,47 @@
+---
+- name: Check if xcode present
+  shell: xcodebuild --help
+  register: xcodebuild_exec
+
+- name: Install xcode
+  shell: xcode-select --install
+  when: xcodebuild_exec.rc != 0
+
+- name: Check if homebrew present
+  stat: path=/usr/local/bin/brew
+  register: brew_present
+
+- name: Install homebrew
+  shell: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  when: brew_present.stat.exists == false
+
+- name: Install homebrew formulas (1/2)
+  homebrew: name={{ item }} state=present
+  with_items:
+    # System Utilities
+    - socat
+    - htop-osx
+    # Shell and Utilities
+    - coreutils
+    - zsh
+    - tmux
+    # Version Control
+    - git
+    - hg
+    # Editors
+    - vim
+    # Development
+    - autoconf
+    - automake
+    - python
+    - python3
+    - node
+    - rbenv
+    - ruby-build
+
+- name: Install homebrew formulas (2/2)
+  homebrew: name={{ item.name }} install_options={{ item.options }} state=present
+  with_items:
+    # Editors
+    - name: emacs
+      options: HEAD,with-cocoa,with-gnutls,with-rsvg,with-imagemagick

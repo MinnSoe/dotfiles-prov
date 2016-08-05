@@ -1,0 +1,31 @@
+---
+- name: Provision Workspace
+  hosts: localhost
+  connection: local
+
+  vars:
+    default_shell: "/bin/zsh"
+    current_shell: "{{ ansible_env.SHELL }}"
+    default_dotfiles: "{{ ansible_env.HOME }}/.dotfiles"
+    playbook_default_location: "{{ default_dotfiles }}/playbooks"
+    current_playbook_location: "{{ ansible_env.PWD }}"
+
+  roles:
+    - role: macos-apps
+      when: ansible_os_family == 'Darwin'
+    - role: common
+
+  tasks:
+    - name: Set default shell to {{ default_shell }}
+      command: chsh -s {{ default_shell }}
+      when: default_shell != current_shell
+
+    - name: Ensure dotfiles are available from ~/.dotfiles
+      file: src="{{ '../'| realpath }}" dest="{{ ansible_env.HOME }}/.dotfiles" state=link
+      when: playbook_default_location != current_playbook_location
+
+    - name: Create home directory symlinks to dotfiles
+      file: src="{{ default_dotfiles }}/{{ item.from }}" dest="{{ item.to }}" state=link
+      with_items:
+        - from: zsh/zshrc
+          to: ~/.zshrc

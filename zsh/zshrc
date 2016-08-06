@@ -1,8 +1,10 @@
 DOTFILES_BASE=$HOME/.dotfiles
-source $DOTFILES_BASE/zsh/antigen/antigen.zsh
+
+source $HOME/.zsh/antigen/antigen.zsh
 
 antigen use oh-my-zsh
 
+## Load macOS specific bundles
 if [[ $OSTYPE == darwin* ]]; then
   antigen bundle osx
 fi
@@ -13,6 +15,7 @@ antigen bundles <<EOBUNDLES
   zsh-users/zsh-syntax-highlighting
 EOBUNDLES
 
+## Must be run after loading the bundles to finalise
 antigen apply
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

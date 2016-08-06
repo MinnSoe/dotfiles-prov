@@ -24,10 +24,13 @@
       file: src="{{ '../'| realpath }}" dest="{{ ansible_env.HOME }}/.dotfiles" state=link
       when: playbook_default_location != current_playbook_location
 
-    - name: Create .vim directory
-      file: path=~/.vim state=directory
+    - name: Create non-symlinked directories
+      file: path="~/{{ item }}" state=directory
+      with_items:
+        - .vim
+        - .zsh
 
-    - name: Create home directory symlinks to dotfiles
+    - name: Symlink to dotfiles
       file: src="{{ default_dotfiles }}/{{ item.from }}" dest="{{ item.to }}" state=link
       with_items:
         - from: zsh/zshrc
@@ -36,3 +39,6 @@
           to: ~/.vimrc
         - from: vim/vim/autoload
           to: ~/.vim/autoload
+
+    - name: Install antigen for zsh
+      git:  repo=https://github.com/zsh-users/antigen.git dest=~/.zsh/antigen

@@ -45,3 +45,6 @@
     # Editors
     - name: emacs
       options: HEAD,with-cocoa,with-gnutls,with-rsvg,with-imagemagick
+
+- name: Download iTerm2 shell integration
+  get_url: url=https://iterm2.com/misc/zsh_startup.in dest=~/.iterm2_shell_integration.zsh mode=0755

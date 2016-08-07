@@ -9,6 +9,7 @@
     default_dotfiles: "{{ ansible_env.HOME }}/.dotfiles"
     playbook_default_location: "{{ default_dotfiles }}/playbooks"
     current_playbook_location: "{{ ansible_env.PWD }}"
+    iterm2_profile_guid: "C1DF3F68-8DBA-4918-A82A-ED0941A8787E"
 
   roles:
     - role: macos-apps
@@ -39,6 +40,25 @@
           to: ~/.vimrc
         - from: vim/vim/autoload
           to: ~/.vim/autoload
+
+    - name: Ensure iTerm2 dynamic profile directory exists
+      file: path="~/Library/Application Support/iTerm2/DynamicProfiles" state=directory
+      when: ansible_os_family == 'Darwin'
+
+    - name: Symlink iTerm2 dynamic profile
+      file: src="{{ default_dotfiles }}/iterm/default.json"
+            dest="~/Library/Application Support/iTerm2/DynamicProfiles/default.json"
+            state=link
+      when: ansible_os_family == 'Darwin'
+
+    - name: Check iTerm2 default profile
+      command: defaults read com.googlecode.iterm2 "Default Bookmark Guid"
+      register: iterm2_value
+      when: ansible_os_family == 'Darwin'
+
+    - name: Set iTerm2 default profile
+      command: defaults write com.googlecode.iterm2 "Default Bookmark Guid" '{{ iterm2_profile_guid }}'
+      when: ansible_os_family == 'Darwin' and "{{ iterm2_profile_guid }}" not in iterm2_value.stdout_lines
 
     - name: Install antigen for zsh
       git:  repo=https://github.com/zsh-users/antigen.git dest=~/.zsh/antigen

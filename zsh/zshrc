@@ -18,6 +18,9 @@ EOBUNDLES
 ## Must be run after loading the bundles to finalise
 antigen apply
 
-## Source iTerm2 shell integration on macOS (file should be absent otherwise)
+## iTerm2 shell integration on macOS (file should be absent otherwise)
 test -e "${HOME}/.iterm2_shell_integration.zsh" && \
 source "${HOME}/.iterm2_shell_integration.zsh"
+
+test -e "${HOME}/.iterm2/imgcat" && alias imgcat=~/.iterm2/imgcat
+test -e "${HOME}/.iterm2/it2dl" && alias it2dl=~/.iterm2/it2dl

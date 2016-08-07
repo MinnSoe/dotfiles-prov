@@ -46,5 +46,15 @@
     - name: emacs
       options: HEAD,with-cocoa,with-gnutls,with-rsvg,with-imagemagick
 
-- name: Download iTerm2 shell integration
-  get_url: url=https://iterm2.com/misc/zsh_startup.in dest=~/.iterm2_shell_integration.zsh mode=0755
+- name: Create folder for iTerm2 files
+  file: path=~/.iterm2 state=directory
+
+- name: Download iTerm2 shell integration and utilities
+  get_url: url={{ item.url }} dest={{ item.dest }} mode=0755
+  with_items:
+    - url: https://iterm2.com/misc/zsh_startup.in
+      dest: ~/.iterm2_shell_integration.zsh
+    - url: https://iterm2.com/imgcat
+      dest: ~/.iterm2/imgcat
+    - url: https://iterm2.com/it2dl
+      dest: ~/.iterm2/it2dl

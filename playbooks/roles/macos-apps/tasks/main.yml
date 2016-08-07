@@ -15,6 +15,9 @@
   shell: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   when: brew_present.stat.exists == false
 
+- name: Tap into Caskroom fonts
+  homebrew_tap: tap=caskroom/fonts state=present
+
 - name: Install homebrew formulas (1/2)
   homebrew: name={{ item }} state=present
   with_items:
@@ -45,6 +48,14 @@
     # Editors
     - name: emacs
       options: HEAD,with-cocoa,with-gnutls,with-rsvg,with-imagemagick
+
+- name: Install homebrew cask formulas
+  homebrew_cask: name={{ item }} state=present
+  with_items:
+    - font-hack
+    - font-fira-mono-for-powerline
+    - font-fira-mono
+    - font-inconsolata-dz-for-powerline
 
 - name: Create folder for iTerm2 files
   file: path=~/.iterm2 state=directory

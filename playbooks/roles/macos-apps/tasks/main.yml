@@ -26,8 +26,8 @@
     - htop-osx
     # Shell and Utilities
     - coreutils
-    - zsh
     - tmux
+    - zsh
     # Version Control
     - git
     - hg
@@ -36,9 +36,9 @@
     # Development
     - autoconf
     - automake
+    - node
     - python
     - python3
-    - node
     - rbenv
     - ruby-build
 
@@ -52,9 +52,9 @@
 - name: Install homebrew cask formulas
   homebrew_cask: name={{ item }} state=present
   with_items:
-    - font-hack
-    - font-fira-mono-for-powerline
     - font-fira-mono
+    - font-fira-mono-for-powerline
+    - font-hack
     - font-inconsolata-dz-for-powerline
 
 - name: Create folder for iTerm2 files

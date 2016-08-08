@@ -9,7 +9,7 @@
     default_dotfiles: "{{ ansible_env.HOME }}/.dotfiles"
     playbook_default_location: "{{ default_dotfiles }}/playbooks"
     current_playbook_location: "{{ ansible_env.PWD }}"
-    iterm2_profile_guid: "C1DF3F68-8DBA-4918-A82A-ED0941A8787E"
+    iterm2_profile_guid: "C1DF3F68-8DBA-4918-A82A-ED0941A8787E" # guid in plist
 
   roles:
     - role: macos-apps
@@ -28,6 +28,7 @@
     - name: Create non-symlinked directories
       file: path="~/{{ item }}" state=directory
       with_items:
+        - .atom
         - .vim
         - .zsh
 
@@ -41,6 +42,10 @@
         - from: vim/vim/autoload
           to: ~/.vim/autoload
 
+    - name: Install antigen for zsh
+      git:  repo=https://github.com/zsh-users/antigen.git dest=~/.zsh/antigen
+
+    ## GUI App configuration
     - name: Ensure iTerm2 dynamic profile directory exists
       file: path="~/Library/Application Support/iTerm2/DynamicProfiles" state=directory
       when: ansible_os_family == 'Darwin'
@@ -60,5 +65,16 @@
       command: defaults write com.googlecode.iterm2 "Default Bookmark Guid" '{{ iterm2_profile_guid }}'
       when: ansible_os_family == 'Darwin' and "{{ iterm2_profile_guid }}" not in iterm2_value.stdout_lines
 
-    - name: Install antigen for zsh
-      git:  repo=https://github.com/zsh-users/antigen.git dest=~/.zsh/antigen
+    - name: Check if atom package manager exists
+      stat: path=/usr/local/bin/apm
+      register: apm
+
+    - name: Install atom editor packages
+      command: apm install -q {{ item }} creates=~/.atom/packages/{{ item }}
+      with_items:
+        - atom-beautify
+        - minimap
+        - oceanic-next
+        - pigments
+        - sort-lines
+      when: apm.stat.exists

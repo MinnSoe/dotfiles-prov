@@ -13,7 +13,7 @@
 
 - name: Install homebrew
   shell: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  when: brew_present.stat.exists == false
+  when: not brew_present.stat.exists
 
 - name: Tap into Caskroom fonts
   homebrew_tap: tap=caskroom/fonts state=present

@@ -41,6 +41,8 @@
           to: ~/.vimrc
         - from: vim/vim/autoload
           to: ~/.vim/autoload
+        - from: atom/config.cson
+          to: ~/.atom/config.cson
 
     - name: Install antigen for zsh
       git:  repo=https://github.com/zsh-users/antigen.git dest=~/.zsh/antigen
@@ -73,6 +75,7 @@
       command: apm install -q {{ item }} creates=~/.atom/packages/{{ item }}
       with_items:
         - atom-beautify
+        - emmet
         - minimap
         - oceanic-next
         - pigments

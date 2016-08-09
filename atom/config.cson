@@ -1,0 +1,19 @@
+"*":
+  core:
+    disabledPackages: []
+    themes: [
+      "one-dark-ui"
+      "oceanic-next"
+    ]
+  editor:
+    fontFamily: "Inconsolata-dz for powerline"
+    fontSize: 12
+    invisibles: {}
+    showInvisibles: true
+  emmet: {}
+  "exception-reporting":
+    userId: "4d8f8418-67a6-11ab-75fe-2c000876f2cf"
+  "file-watcher":
+    promptWhenFileHasChangedOnDisk: false
+  welcome:
+    showOnStartup: false

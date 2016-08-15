@@ -1,0 +1,10 @@
+.DS_Store
+*~
+
+## emacs
+/emacs/auto-save-list/
+/emacs/elpa/
+/emacs/.cask/
+/emacs/url/
+/emacs/eshell/
+/emacs/var/

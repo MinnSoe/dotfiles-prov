@@ -43,6 +43,8 @@
           to: ~/.vim/autoload
         - from: atom/config.cson
           to: ~/.atom/config.cson
+        - from: emacs
+          to: ~/.emacs.d
 
     - name: Install antigen for zsh
       git:  repo=https://github.com/zsh-users/antigen.git dest=~/.zsh/antigen

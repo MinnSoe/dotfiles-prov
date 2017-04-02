@@ -50,6 +50,9 @@
     - name: emacs
       options: HEAD,with-cocoa,with-gnutls,with-rsvg,with-imagemagick
 
+- name: Tap into Caskroom versions
+  homebrew_tap: tap=caskroom/versions state=present
+
 - name: Install homebrew cask formulas
   homebrew_cask: name={{ item }} state=present
   with_items:
@@ -57,6 +60,11 @@
     - font-fira-mono-for-powerline
     - font-hack
     - font-inconsolata-dz-for-powerline
+    - iterm2
+    - google-chrome-canary
+    - firefoxnightly
+    - alfred
+    - 1password
 
 - name: Create folder for iTerm2 files
   file: path=~/.iterm2 state=directory

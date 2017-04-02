@@ -1,11 +1,12 @@
 ---
-- name: Check if xcode present
+- name: Check if xcode command line tools present
   shell: xcodebuild --help
   register: xcodebuild_exec
+  ignore_errors: yes
 
 - name: Install xcode
   shell: xcode-select --install
-  when: xcodebuild_exec.rc != 0
+  when: xcodebuild_exec.rc != 0 and '/Library/Developer/CommandLineTools' not in xcodebuild_exec.stderr
 
 - name: Check if homebrew present
   stat: path=/usr/local/bin/brew

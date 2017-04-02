@@ -64,6 +64,7 @@
       command: defaults read com.googlecode.iterm2 "Default Bookmark Guid"
       register: iterm2_value
       when: ansible_os_family == 'Darwin'
+      ignore_errors: yes
 
     - name: Set iTerm2 default profile
       command: defaults write com.googlecode.iterm2 "Default Bookmark Guid" '{{ iterm2_profile_guid }}'

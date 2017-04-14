@@ -1,3 +1,12 @@
+;; Appearance
+;; ==========
+
 (load-theme 'base16-oceanicnext-dark t)
-(tool-bar-mode -1)
+
+;; Frame
+(custom-set-variables
+ '(column-number-mode t)
+ '(scroll-bar-mode nil)
+ '(tool-bar-mode nil))
+
 (set-frame-parameter nil 'fullscreen 'fullboth)

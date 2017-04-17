@@ -1,6 +1,7 @@
 "*":
   core:
     disabledPackages: []
+    telemetryConsent: "no"
     themes: [
       "one-dark-ui"
       "oceanic-next"

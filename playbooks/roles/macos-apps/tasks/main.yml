@@ -42,6 +42,8 @@
     - python3
     - rbenv
     - ruby-build
+    - go
+    - sbt
 
 - name: Install homebrew formulas (2/2)
   homebrew: name={{ item.name }} install_options={{ item.options }} state=present
